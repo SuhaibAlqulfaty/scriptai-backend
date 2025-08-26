@@ -27,7 +27,7 @@ class ScriptController extends Controller
         // Validate request
         $validator = Validator::make($request->all(), [
             'topic' => 'required|string|max:500|min:5',
-            'key_points' => 'nullable|string|max:1000',
+            'keyPoints' => 'nullable|string|max:1000',
             'tone' => 'required|string|in:enthusiastic,comedy,educational,storytelling,professional',
             'language' => 'nullable|string|in:ar,en',
         ]);
@@ -47,7 +47,7 @@ class ScriptController extends Controller
             // Generate script using OpenAI
             $result = $this->openAIService->generateScript(
                 $data['topic'],
-                $data['key_points'] ?? null,
+                $data['keyPoints'] ?? null,
                 $data['tone'],
                 $data['language']
             );
@@ -63,7 +63,7 @@ class ScriptController extends Controller
             // Save to database
             $script = Script::create([
                 'topic' => $data['topic'],
-                'key_points' => $data['key_points'],
+                'key_points' => $data['keyPoints'],
                 'tone' => $data['tone'],
                 'language' => $data['language'],
                 'generated_script' => $result['script'],
