@@ -1,66 +1,130 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# ScriptAI Laravel Backend
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+<div align="center">
 
-## About Laravel
+![ScriptAI Backend](https://img.shields.io/badge/ScriptAI-Laravel%20Backend-red?style=for-the-badge&logo=laravel)
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+**Professional Laravel API for AI-powered Arabic script generation with OpenAI integration**
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+[![Laravel](https://img.shields.io/badge/Laravel-11.x-FF2D20?style=flat&logo=laravel)](https://laravel.com/)
+[![PHP](https://img.shields.io/badge/PHP-8.1+-777BB4?style=flat&logo=php)](https://php.net/)
+[![OpenAI](https://img.shields.io/badge/OpenAI-GPT--4-412991?style=flat&logo=openai)](https://openai.com/)
+[![MySQL](https://img.shields.io/badge/MySQL-8.0+-4479A1?style=flat&logo=mysql)](https://mysql.com/)
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+</div>
 
-## Learning Laravel
+## ✨ Features
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+### 🤖 AI-Powered Script Generation
+- **OpenAI GPT-4 Integration** with optimized prompts
+- **5 Tone Options**: Enthusiastic (حماسي), Comedy (كوميدي), Educational (تعليمي), Storytelling (قصصي), Professional (احترافي)
+- **Arabic & English Support** with proper RTL handling
+- **Content Quality Scoring** based on engagement metrics
+- **Smart Duration Estimation** for video planning
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+### 📊 Advanced Analytics
+- **Real-time Statistics** on script generation
+- **Popular Topics Tracking** and trend analysis
+- **Tone Distribution Analytics** for content optimization
+- **Performance Metrics** including quality and engagement scores
+- **Daily Generation Reports** with historical data
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### 🛡️ Production-Ready Features
+- **Eloquent ORM Models** with relationships and scopes
+- **Database Migrations** with proper indexing
+- **Input Validation** and sanitization ready
+- **Rate Limiting** configuration ready
+- **CORS Support** for frontend integration
+- **Environment Configuration** for different deployments
 
-## Laravel Sponsors
+## 🚀 Quick Start
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+### Prerequisites
+- PHP 8.1+
+- Composer
+- SQLite (or MySQL for production)
+- OpenAI API Key
 
-### Premium Partners
+### Installation
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+1. **Clone the repository**
+```bash
+git clone https://github.com/SuhaibAlqulfaty/scriptai-backend.git
+cd scriptai-backend
+```
 
-## Contributing
+2. **Install dependencies**
+```bash
+composer install
+```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+3. **Environment setup**
+```bash
+cp .env.example .env
+php artisan key:generate
+```
 
-## Code of Conduct
+4. **Configure environment variables**
+```bash
+# Edit .env file
+OPENAI_API_KEY=your_openai_api_key_here
+```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+5. **Database setup**
+```bash
+touch database/database.sqlite
+php artisan migrate
+```
 
-## Security Vulnerabilities
+6. **Start the development server**
+```bash
+php artisan serve
+```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+## 📊 Database Schema
 
-## License
+### Scripts Table
+- Complete script generation tracking
+- Quality and engagement scoring
+- Multi-language support
+- Performance analytics
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+### Script Feedback Table
+- User rating system
+- Detailed feedback metrics
+- Quality improvement tracking
+
+## 🔧 Environment Configuration
+
+```bash
+# OpenAI Integration
+OPENAI_API_KEY=your_openai_api_key_here
+OPENAI_MODEL=gpt-4
+
+# ScriptAI Settings
+SCRIPTAI_DEFAULT_TONE=educational
+SCRIPTAI_SUPPORTED_LANGUAGES=ar,en
+```
+
+## 👨‍💻 Author
+
+**Suhaib Alqulfaty**
+- GitHub: [@SuhaibAlqulfaty](https://github.com/SuhaibAlqulfaty)
+
+## 🔄 Next Steps
+
+1. **Create OpenAI Service** for script generation
+2. **Build API Controllers** with proper validation
+3. **Implement Rate Limiting** middleware
+4. **Add CORS Configuration** for frontend
+5. **Create API Documentation** with examples
+
+---
+
+<div align="center">
+
+**Built with ❤️ for the Arabic content creation community 🇸🇦**
+
+If you find this project helpful, please give it a ⭐ on GitHub!
+
+</div>
