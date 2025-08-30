@@ -30,6 +30,8 @@ class ScriptController extends Controller
             'keyPoints' => 'nullable|string|max:1000',
             'tone' => 'required|string|in:enthusiastic,comedy,educational,storytelling,professional',
             'language' => 'nullable|string|in:ar,en',
+            'duration' => 'nullable|integer|min:30|max:180',
+            'enhancement_level' => 'nullable|string|in:basic,intelligent',
         ]);
 
         if ($validator->fails()) {
@@ -42,15 +44,30 @@ class ScriptController extends Controller
 
         $data = $validator->validated();
         $data['language'] = $data['language'] ?? 'ar';
+        $data['duration'] = $data['duration'] ?? 60;
+        $data['enhancement_level'] = $data['enhancement_level'] ?? 'intelligent';
 
         try {
-            // Generate script using OpenAI
-            $result = $this->openAIService->generateScript(
-                $data['topic'],
-                $data['keyPoints'] ?? null,
-                $data['tone'],
-                $data['language']
-            );
+            // Use enhanced service for intelligent generation
+            if ($data['enhancement_level'] === 'intelligent') {
+                $enhancedService = new \App\Services\EnhancedOpenAIService();
+                
+                $result = $enhancedService->generateIntelligentScript(
+                    $data['topic'],
+                    $data['keyPoints'] ?? null,
+                    $data['tone'],
+                    $data['language'],
+                    $data['duration']
+                );
+            } else {
+                // Fallback to basic service
+                $result = $this->openAIService->generateScript(
+                    $data['topic'],
+                    $data['keyPoints'] ?? null,
+                    $data['tone'],
+                    $data['language']
+                );
+            }
 
             if (!$result['success']) {
                 return response()->json([
@@ -60,7 +77,7 @@ class ScriptController extends Controller
                 ], 500);
             }
 
-            // Save to database
+            // Save to database with enhanced metadata
             $script = Script::create([
                 'topic' => $data['topic'],
                 'key_points' => $data['keyPoints'],
@@ -69,11 +86,19 @@ class ScriptController extends Controller
                 'generated_script' => $result['script'],
                 'word_count' => $result['word_count'],
                 'estimated_duration' => $result['estimated_duration'],
-                'quality_score' => $result['quality_score'],
-                'engagement_score' => $result['engagement_score'],
+                'quality_score' => $result['quality_analysis']['overall_score'] ?? ($result['quality_score'] ?? 75),
+                'engagement_score' => $result['quality_analysis']['engagement_prediction'] ?? ($result['engagement_score'] ?? 75),
                 'user_ip' => $request->ip(),
                 'user_agent' => $request->userAgent(),
-                'generation_time' => $result['generation_time'],
+                'generation_time' => $result['generation_metadata']['processing_time'] ?? ($result['generation_time'] ?? 2.0),
+                'metadata' => json_encode([
+                    'enhancement_level' => $data['enhancement_level'],
+                    'insights_used' => $result['insights_used'] ?? null,
+                    'hooks_generated' => $result['hooks_generated'] ?? null,
+                    'statistics_used' => $result['statistics_used'] ?? null,
+                    'quality_analysis' => $result['quality_analysis'] ?? null,
+                    'generation_metadata' => $result['generation_metadata'] ?? null,
+                ])
             ]);
 
             return response()->json([
@@ -83,15 +108,22 @@ class ScriptController extends Controller
                     'script' => $result['script'],
                     'word_count' => $result['word_count'],
                     'estimated_duration' => $result['estimated_duration'],
-                    'quality_score' => $result['quality_score'],
-                    'engagement_score' => $result['engagement_score'],
-                    'generation_time' => $result['generation_time'],
+                    'quality_score' => $result['quality_analysis']['overall_score'] ?? ($result['quality_score'] ?? 75),
+                    'engagement_prediction' => $result['quality_analysis']['engagement_prediction'] ?? 'medium',
+                    'confidence_score' => $result['quality_analysis']['confidence_score'] ?? 0.85,
+                    'generation_time' => $result['generation_metadata']['processing_time'] ?? ($result['generation_time'] ?? 2.0),
+                    'enhancement_level' => $data['enhancement_level'],
                     'created_at' => $script->created_at->toISOString(),
                 ],
                 'meta' => [
                     'tokens_used' => $result['tokens_used'] ?? 0,
                     'tone' => $data['tone'],
                     'language' => $data['language'],
+                    'insights_summary' => [
+                        'hooks_generated' => count($result['hooks_generated'] ?? []),
+                        'statistics_used' => count($result['statistics_used'] ?? []),
+                        'stages_completed' => $result['generation_metadata']['stages_completed'] ?? 1,
+                    ]
                 ]
             ]);
 
@@ -100,6 +132,7 @@ class ScriptController extends Controller
                 'error' => $e->getMessage(),
                 'topic' => $data['topic'],
                 'tone' => $data['tone'],
+                'enhancement_level' => $data['enhancement_level'],
             ]);
 
             return response()->json([
