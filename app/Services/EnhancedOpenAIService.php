@@ -13,10 +13,7 @@ class EnhancedOpenAIService
 
     public function __construct()
     {
-        // Check if OpenAI is available
-        if (config('services.openai.api_key')) {
-            $this->client = OpenAI::client(config('services.openai.api_key'));
-        }
+        // OpenAI client is available through the facade
         $this->processingStartTime = microtime(true);
     }
 
@@ -132,7 +129,7 @@ class EnhancedOpenAIService
 }
 ";
 
-            $response = $this->client->chat()->create([
+            $response = OpenAI::chat()->create([
                 'model' => 'gpt-4',
                 'messages' => [
                     ['role' => 'system', 'content' => 'أنت خبير تحليل المحتوى والاتجاهات مع معرفة عميقة بالسوق العربي والعالمي.'],
@@ -212,7 +209,7 @@ class EnhancedOpenAIService
 }
 ";
 
-        $response = $this->client->chat()->create([
+        $response = OpenAI::chat()->create([
             'model' => 'gpt-4',
             'messages' => [
                 ['role' => 'system', 'content' => 'أنت خبير في كتابة الخطافات المؤثرة والجذابة للمحتوى العربي.'],
@@ -267,7 +264,7 @@ class EnhancedOpenAIService
 ابحث في معرفتك واجمع أقوى الإحصائيات المتعلقة بالموضوع:
 ";
 
-        $response = $this->client->chat()->create([
+        $response = OpenAI::chat()->create([
             'model' => 'gpt-4',
             'messages' => [
                 ['role' => 'system', 'content' => 'أنت خبير في البحث والإحصائيات مع وصول لأحدث البيانات والدراسات.'],
@@ -355,7 +352,7 @@ class EnhancedOpenAIService
 اكتب الاسكربت الآن بشكل متدفق وطبيعي:
 ";
 
-        $response = $this->client->chat()->create([
+        $response = OpenAI::chat()->create([
             'model' => 'gpt-4',
             'messages' => [
                 ['role' => 'system', 'content' => 'أنت كاتب اسكربتات محترف متخصص في المحتوى العربي عالي الجودة والتفاعل.'],
@@ -435,7 +432,7 @@ class EnhancedOpenAIService
 }
 ";
 
-        $response = $this->client->chat()->create([
+        $response = OpenAI::chat()->create([
             'model' => 'gpt-4',
             'messages' => [
                 ['role' => 'system', 'content' => 'أنت خبير تقييم المحتوى والاسكربتات مع خبرة في تحليل الأداء والتفاعل.'],
