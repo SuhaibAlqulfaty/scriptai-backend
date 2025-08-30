@@ -80,7 +80,7 @@ class ScriptController extends Controller
             // Save to database with enhanced metadata
             $script = Script::create([
                 'topic' => $data['topic'],
-                'key_points' => $data['keyPoints'],
+                'key_points' => $data['keyPoints'] ?? null,
                 'tone' => $data['tone'],
                 'language' => $data['language'],
                 'generated_script' => $result['script'],
